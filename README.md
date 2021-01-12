@@ -13,3 +13,4 @@ A serverless photo album running on Azure.
 7. If you need to create additional functions or debug the existing one, follow these [instructions on activating the virtual environment and debugging](https://docs.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-python?tabs=azure-cli%2Cbash%2Cbrowser).
 8. Installing [Azure Storage Explorer](https://azure.microsoft.com/en-us/features/storage-explorer/) makes viewing data easier.
 9. Install `pip install azure-store-blob`, the SDK allowing python to read files from Blob storage.  Documentatino here: https://docs.microsoft.com/en-us/python/api/overview/azure/storage-blob-readme?view=azure-python
+10. Add the storage access key to the `AzureWebJobsStorage` value in local.settings.json. 
