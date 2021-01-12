@@ -20,6 +20,7 @@ dev-environment: requirements
 	$(PYTHON_INTERPRETER) -m venv .venv
 
 resources:
+	cd Infrastructure && \
 	bash 01-Create Azure Infrastructure.sh
 
 new-functionapp:
@@ -29,5 +30,10 @@ new-function:
 	func new --name "photos" --template "HTTP trigger" --authlevel "anonymous"
 
 deploy-functionapp:
+	cd AppCode/serverless-photo-album-app/ && \
 	func azure functionapp publish serverless-photo-album-app
+
+deploy-website:
+	az storage blob upload-batch -s AppCode/website -d '$$web' --account-name serverlessphotostorage
+
 
