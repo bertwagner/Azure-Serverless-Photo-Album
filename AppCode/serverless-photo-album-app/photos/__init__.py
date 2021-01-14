@@ -14,7 +14,12 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     # Lookup the folder and return a list of blobs
     container = ContainerClient.from_connection_string(conn_str=os.environ["AzureWebJobsStorage"], container_name="photos")
-    blob_list = container.list_blobs(name_starts_with=folder)
+    blob_list = list(container.list_blobs(name_starts_with=folder))
+
+    if len(blob_list) == 0:
+        return func.HttpResponse(
+            status_code=404
+        )
 
     # Create our response obejct
     photo_response = {
