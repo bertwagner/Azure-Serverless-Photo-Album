@@ -484,7 +484,7 @@ html, body, div, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, ol, ul, 
     max-width: 800px;
     margin: 24px auto;
     padding: 0 30px;
-    position: relative;
+    position: relative; 
   }
   
   .row--docs {
@@ -698,9 +698,12 @@ html, body, div, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, ol, ul, 
   
   
   .gallery {
-    width: 100%;
+    /* width: 100%;
     height: auto;
-    float: left;
+    float: left; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:center;
   }
   .gallery a {
     -webkit-tap-highlight-color: rgba(0,0,0,0);
