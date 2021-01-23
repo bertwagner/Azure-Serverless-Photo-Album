@@ -6,8 +6,8 @@ from dotenv import load_dotenv, find_dotenv
 from azure.storage.blob import BlobClient
 import json
 
-def create_thumbs_folder(folder_path):
-    thumbs_path = pathlib.Path(os.path.join(folder_path,"thumbs"))
+def create_thumbs_folder(folder_path,name):
+    thumbs_path = pathlib.Path(os.path.join(folder_path,name))
     
     # Create the thumbs folder if doesn't already exist
     thumbs_path.mkdir(exist_ok=True)
@@ -34,14 +34,14 @@ def calculate_thumnail_dimensions(width,height,final_max_dimension):
     
     return (new_width,new_height)
 
-def create_thumbnail(folder, thumbs_folder, filename):
+def create_thumbnail(folder, thumbs_folder, filename, max_dimension):
 
     # Get photo dimensions
     photo = cv2.imread(os.path.join(folder,filename))
     width = photo.shape[1]
     height = photo.shape[0]
 
-    thumb_dimensions = calculate_thumnail_dimensions(width,height,200)
+    thumb_dimensions = calculate_thumnail_dimensions(width,height,max_dimension)
  
     # Resize image
     resized_image = cv2.resize(photo,thumb_dimensions,interpolation=cv2.INTER_CUBIC)
@@ -75,7 +75,8 @@ if __name__ == "__main__":
     load_dotenv(dotenv_path)
 
     # Create a thumbs folder if it doesn't exist
-    thumbs_folder = create_thumbs_folder(folder)
+    medium_folder = create_thumbs_folder(folder,"medium")
+    small_folder = create_thumbs_folder(folder,"small")
 
     # Declare an object for storing all of our photo meta data
     file_paths = []
@@ -94,12 +95,18 @@ if __name__ == "__main__":
             file_info["height"] = height
 
             # Create a thumbnail, returning the thumbnail and dimensions
-            thumbnail_filename, thumbnail_width, thumbnail_height = create_thumbnail(folder, thumbs_folder, filename)
-            file_info["thumbnail_width"] = thumbnail_width
-            file_info["thumbnail_height"] = thumbnail_height
+            medium_filename, medium_width, medium_height = create_thumbnail(folder, medium_folder, filename, 1024)
+            file_info["medium_width"] = medium_width
+            file_info["medium_height"] = medium_height
 
-            #upload_to_blob_storage(folder, filename, name)
-            #upload_to_blob_storage(folder+"/thumbs", filename, name+"/thumbs")
+            # Create a thumbnail, returning the thumbnail and dimensions
+            small_filename, small_width, small_height = create_thumbnail(folder, small_folder, filename, 200)
+            file_info["small_width"] = small_width
+            file_info["small_height"] = small_height
+
+            upload_to_blob_storage(folder, filename, name)
+            upload_to_blob_storage(folder+"/medium", filename, name+"/medium")
+            upload_to_blob_storage(folder+"/small", filename, name+"/small")
 
             file_paths.append(file_info)
 
