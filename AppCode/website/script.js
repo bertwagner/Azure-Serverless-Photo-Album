@@ -305,7 +305,7 @@ return Promise.reject(response);
         var smallSize = "https://serverlessphotostorage.blob.core.windows.net/photos/"+folderName+"/small/"+data[i].name;
         var smallDimensions = data[i].smalll_width+'x'+data[i].small_height;
         var newNode = htmlToElem('<a href="'+fullSize+'" data-size="'+fullDimensions+'" data-med="'+fullSize+'" data-med-size="'+fullDimensions+'"> \
-            <img src="'+smallSize+'" width="'+data[i].small_width+'" height="'+data[i].small_height+'" alt="" /> \
+            <img src="'+smallSize+'" alt="" /> \
         </a>')
         document.querySelector("#serverless-gallery").append(newNode);
     }

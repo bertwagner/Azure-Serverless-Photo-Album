@@ -1,7 +1,7 @@
 /* Demo site CSS. Not mobile first, not semantic, not optimized, made for 20 minutes, mess */
 html, body, div, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, ol, ul, li, form, fieldset, legend, label, table, header, footer, nav, section, figure {
   margin: 0;
-  padding: 0; 
+  padding: 0;
 }
 figure {
   display: block;
@@ -53,3 +53,9 @@ body {
 .gallery > a {
   padding: 5px;
 }
+
+@media screen and (max-width: 400px) {
+	.gallery > a > img {
+		width: 150px;
+  }
+} 
