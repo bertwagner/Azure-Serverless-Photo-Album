@@ -47,16 +47,16 @@ def create_thumbnail(folder, thumbs_folder, filename, max_dimension):
     resized_image = cv2.resize(photo,thumb_dimensions,interpolation=cv2.INTER_CUBIC)
 
     # Save thumbnail
-    cv2.imwrite(os.path.join(thumbs_folder,filename),resized_image)
+    cv2.imwrite(os.path.join(thumbs_folder,filename),resized_image, [cv2.IMWRITE_PNG_COMPRESSION, 9])
     
     return resized_image, thumb_dimensions[0], thumb_dimensions[1]
 
 def upload_to_blob_storage(local_folder, filename, blob_folder_name):
    
     blob = BlobClient.from_connection_string(conn_str=os.environ["AzureWebJobsStorage"], container_name="photos", blob_name=os.path.join(blob_folder_name,filename))
-
+    
     with open(os.path.join(local_folder,filename), "rb") as data:
-        blob.upload_blob(data)
+       blob.upload_blob(data,overwrite=True)
 
 
 if __name__ == "__main__":
@@ -114,4 +114,4 @@ if __name__ == "__main__":
     json_filename = os.path.join(folder,"photos.json")
     with open(json_filename,"w") as f:
         json.dump(file_paths,f)
-    upload_to_blob_storage(folder, "photos.json", name)
+    #upload_to_blob_storage(folder, "photos.json", name)
