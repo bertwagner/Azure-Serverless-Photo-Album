@@ -270,7 +270,7 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
     }
 };
 
-initPhotoSwipeFromDOM('.gallery');
+
 
 function htmlToElem(html) {
     let temp = document.createElement('template');
@@ -309,6 +309,8 @@ return Promise.reject(response);
         </a>')
         document.querySelector("#serverless-gallery").append(newNode);
     }
+    
+    initPhotoSwipeFromDOM('.gallery');
     
 }).catch(function (err) {
 // There was an error
